@@ -1,0 +1,217 @@
+<html>
+  <head>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.1/css/fontawesome.min.css"
+      integrity="sha384-QYIZto+st3yW+o8+5OHfT6S482Zsvz2WfOzpFSXMF9zqeLcFV0/wlZpMtyFcZALm"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"
+    />
+  </head>
+  <body>
+    <div x-data="handleTable()" x-init="">
+      <input
+        class="input"
+        x-model="search"
+        @keyup="onSearch()"
+        placeholder="Search..."
+      />
+      <button class="button" @click="reset()">Reset</button>
+      <table class="table is-fullwidth is-bordered">
+        <thead>
+          <tr>
+            <th>Resource Name</th>
+            <th>Description</th>
+            <th>Cloudformation</th>
+            <th>Repository</th>
+          </tr>
+        </thead>
+        <tbody>
+          <template x-for="item in items" :key="item.name">
+            <tr>
+              <td x-text="item.name"></td>
+              <td x-text="item.description"></td>
+              <td>
+                <a href="item.cloudformationLink" target="_blank"
+                  >Cloudformation</a
+                >
+              </td>
+              <td>
+                <a href="item.repoLink" target="_blank">Repository</a>
+              </td>
+            </tr>
+          </template>
+        </tbody>
+      </table>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.js"></script>
+    <script>
+      function handleTable() {
+        const tableData = [
+          {
+            name: "some arbitrary aws resource 0",
+            description:
+              "this is a thing we need. this is a thing we need.this is a thing we need. this is a thing we needthis is a thing we need. this is a thing we needthis is a thing we need. this is a thing we needthis is a thing we need. this is a thing we needthis is a thing we need. this is a thing we needthis is a thing we need. this is a thing we needthis is a thing we need. this is a thing we needthis is a thing we need. this is a thing we need",
+            cloudformationLink: "https://console.aws.amazon.com",
+            repoLink: "https://github.com/wolfejw86",
+          },
+          {
+            name: "some arbitrary aws resource 1",
+            description: "this is a thing we need",
+            cloudformationLink: "https://console.aws.amazon.com",
+            repoLink: "https://github.com/wolfejw86",
+          },
+          {
+            name: "some arbitrary aws resource 2",
+            description: "this is a thing we need",
+            cloudformationLink: "https://console.aws.amazon.com",
+            repoLink: "https://github.com/wolfejw86",
+          },
+          {
+            name: "some arbitrary aws resource 3",
+            description: "this is a thing we need",
+            cloudformationLink: "https://console.aws.amazon.com",
+            repoLink: "https://github.com/wolfejw86",
+          },
+          {
+            name: "some arbitrary aws resource 4",
+            description: "this is a thing we need",
+            cloudformationLink: "https://console.aws.amazon.com",
+            repoLink: "https://github.com/wolfejw86",
+          },
+          {
+            name: "some arbitrary aws resource 5",
+            description: "this is a thing we need",
+            cloudformationLink: "https://console.aws.amazon.com",
+            repoLink: "https://github.com/wolfejw86",
+          },
+          {
+            name: "some arbitrary aws resource 6",
+            description: "this is a thing we need",
+            cloudformationLink: "https://console.aws.amazon.com",
+            repoLink: "https://github.com/wolfejw86",
+          },
+          {
+            name: "some arbitrary aws resource 7",
+            description: "this is a thing we need",
+            cloudformationLink: "https://console.aws.amazon.com",
+            repoLink: "https://github.com/wolfejw86",
+          },
+          {
+            name: "some arbitrary aws resource 8",
+            description: "this is a thing we need",
+            cloudformationLink: "https://console.aws.amazon.com",
+            repoLink: "https://github.com/wolfejw86",
+          },
+          {
+            name: "some arbitrary aws resource 9",
+            description: "this is a thing we need",
+            cloudformationLink: "https://console.aws.amazon.com",
+            repoLink: "https://github.com/wolfejw86",
+          },
+          {
+            name: "some arbitrary aws resource 10",
+            description: "this is a thing we need",
+            cloudformationLink: "https://console.aws.amazon.com",
+            repoLink: "https://github.com/wolfejw86",
+          },
+          {
+            name: "some arbitrary aws resource 11",
+            description: "this is a thing we need",
+            cloudformationLink: "https://console.aws.amazon.com",
+            repoLink: "https://github.com/wolfejw86",
+          },
+          {
+            name: "some arbitrary aws resource 12",
+            description: "this is a thing we need",
+            cloudformationLink: "https://console.aws.amazon.com",
+            repoLink: "https://github.com/wolfejw86",
+          },
+          {
+            name: "some arbitrary aws resource 13",
+            description: "this is a thing we need",
+            cloudformationLink: "https://console.aws.amazon.com",
+            repoLink: "https://github.com/wolfejw86",
+          },
+          {
+            name: "some arbitrary aws resource 14",
+            description: "this is a thing we need",
+            cloudformationLink: "https://console.aws.amazon.com",
+            repoLink: "https://github.com/wolfejw86",
+          },
+          {
+            name: "some arbitrary aws resource 15",
+            description: "this is a thing we need",
+            cloudformationLink: "https://console.aws.amazon.com",
+            repoLink: "https://github.com/wolfejw86",
+          },
+          {
+            name: "some arbitrary aws resource 16",
+            description: "this is a thing we need",
+            cloudformationLink: "https://console.aws.amazon.com",
+            repoLink: "https://github.com/wolfejw86",
+          },
+          {
+            name: "some arbitrary aws resource 17",
+            description: "this is a thing we need",
+            cloudformationLink: "https://console.aws.amazon.com",
+            repoLink: "https://github.com/wolfejw86",
+          },
+          {
+            name: "some arbitrary aws resource 18",
+            description: "this is a thing we need",
+            cloudformationLink: "https://console.aws.amazon.com",
+            repoLink: "https://github.com/wolfejw86",
+          },
+          {
+            name: "some arbitrary aws resource 19",
+            description: "this is a thing we need",
+            cloudformationLink: "https://console.aws.amazon.com",
+            repoLink: "https://github.com/wolfejw86",
+          },
+        ];
+
+        const options = {
+          // isCaseSensitive: false,
+          // includeScore: false,
+          // shouldSort: true,
+          // includeMatches: false,
+          // findAllMatches: false,
+          // minMatchCharLength: 1,
+          // location: 0,
+          // threshold: 0.6,
+          // distance: 100,
+          // useExtendedSearch: false,
+          // ignoreLocation: false,
+          // ignoreFieldNorm: false,
+          // fieldNormWeight: 1,
+          keys: ["name", "description"],
+        };
+
+        const fuse = new Fuse(tableData, options);
+
+        return {
+          items: tableData,
+          reset() {
+            this.search = "";
+            this.items = tableData;
+          },
+          onSearch() {
+            console.log(this.search);
+            const pattern = this.search;
+
+            this.items = fuse.search(pattern).map((res) => res.item);
+          },
+          search: "",
+        };
+      }
+    </script>
+    <script
+      defer
+      src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"
+    ></script>
+  </body>
+</html>
