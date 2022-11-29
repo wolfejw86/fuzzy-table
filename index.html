@@ -32,8 +32,8 @@
         <tbody>
           <template x-for="item in items" :key="item.name">
             <tr>
-              <td x-text="item.name"></td>
-              <td x-text="item.description"></td>
+              <td x-html="item.name"></td>
+              <td x-html="item.description"></td>
               <td>
                 <a href="item.cloudformationLink" target="_blank"
                   >Cloudformation</a
@@ -178,7 +178,7 @@
           // isCaseSensitive: false,
           // includeScore: false,
           // shouldSort: true,
-          // includeMatches: false,
+          includeMatches: true,
           // findAllMatches: false,
           // minMatchCharLength: 1,
           // location: 0,
@@ -202,8 +202,23 @@
           onSearch() {
             console.log(this.search);
             const pattern = this.search;
+            const searchResult = fuse.search(pattern);
+            console.log(searchResult);
+            this.items = searchResult.map((res) => {
+              res.matches.forEach(({ indices, key, value }) => {
+                indices.forEach(([start, end]) => {
+                  const highlighted = value.substring(start, end + 1);
+                  value = value.replace(
+                    highlighted,
+                    `<span class="has-background-warning">${highlighted}</span>`
+                  );
+                });
 
-            this.items = fuse.search(pattern).map((res) => res.item);
+                res.item[key] = value;
+              });
+
+              return res.item;
+            });
           },
           search: "",
         };
